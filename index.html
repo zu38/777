@@ -6,17 +6,162 @@ l<!DOCTYPE html>
     <title> Game Records</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Impact&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* ===== Base Styles ===== */
+.button-section {
+    position: relative;
+    padding: 4rem 2rem;
+    margin: 4rem auto;
+    max-width: 1200px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(143,143,143,0.1);
+    border: 1px solid rgba(255,255,255,0.5);
+    overflow: hidden;
+}
+
+/* ===== Raining Effect ===== */
+.rain {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.drop {
+    position: absolute;
+    width: 2px;
+    height: 50px;
+    background: linear-gradient(to bottom, rgba(173, 216, 230, 0.6), rgba(173, 216, 230, 0.3));
+    animation: fall linear infinite;
+    border-radius: 2px;
+}
+
+@keyframes fall {
+    0% { transform: translateY(-100%) translateX(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(100vh) translateX(30px); opacity: 0; }
+}
+
+/* ===== Button Container ===== */
+.button-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+}
+
+/* ===== Main Button Styles ===== */
+.nav-button {
+    position: relative;
+    padding: 1.2rem 2.8rem;
+    background: linear-gradient(135deg, #ff7b7b 0%, #ff5252 100%);
+    color: white !important;
+    text-decoration: none;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px rgba(255,123,123,0.15);
+    border: 2px solid rgba(255,255,255,0.3);
+    cursor: pointer;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    overflow: hidden;
+}
+
+.nav-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: 0.5s;
+}
+
+.nav-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255,123,123,0.25);
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff4040 100%);
+}
+
+.nav-button:hover::before {
+    left: 100%;
+}
+
+.nav-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 3px 8px rgba(255,123,123,0.2);
+}
+
+/* ===== Color Variations ===== */
+.nav-button:nth-child(2) { background: linear-gradient(135deg, #6c5ce7 0%, #4b37d6 100%); box-shadow: 0 4px 6px rgba(108,92,231,0.15); }
+.nav-button:nth-child(2):hover { background: linear-gradient(135deg, #5b4ad6 0%, #3a26c5 100%); }
+
+.nav-button:nth-child(3) { background: linear-gradient(135deg, #00b894 0%, #009d7a 100%); box-shadow: 0 4px 6px rgba(0,184,148,0.15); }
+.nav-button:nth-child(3):hover { background: linear-gradient(135deg, #00a783 0%, #008b69 100%); }
+
+.nav-button:nth-child(4) { background: linear-gradient(135deg, #fdcb6e 0%, #f9a825 100%); box-shadow: 0 4px 6px rgba(253,203,110,0.15); }
+.nav-button:nth-child(4):hover { background: linear-gradient(135deg, #f5b747 0%, #e69500 100%); }
+
+.nav-button:nth-child(5) { background: linear-gradient(135deg, #e84393 0%, #c23678 100%); box-shadow: 0 4px 6px rgba(232,67,147,0.15); }
+.nav-button:nth-child(5):hover { background: linear-gradient(135deg, #d73282 0%, #b12567 100%); }
+
+.nav-button:nth-child(6) { background: linear-gradient(135deg, #00cec9 0%, #00a8a3 100%); box-shadow: 0 4px 6px rgba(0,206,201,0.15); }
+.nav-button:nth-child(6):hover { background: linear-gradient(135deg, #00b5b0 0%, #00918d 100%); }
+
+/* ===== Learn More Button ===== */
+.learn-more {
+    display: inline-block;
+    margin: 2.5rem auto 0;
+    padding: 0.8rem 2.2rem;
+    color: #6c5ce7;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 25px;
+    background: rgba(255,255,255,0.9);
+    border: 2px solid rgba(108,92,231,0.15);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 2px 8px rgba(108,92,231,0.08);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    z-index: 2;
+}
+
+.learn-more:hover {
+    background: rgba(108,92,231,0.08);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(108,92,231,0.12);
+    color: #4b37d6;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 768px) {
+    .nav-button { width: 100%; max-width: 300px; }
+    .button-section { padding: 2rem 1rem; margin: 2rem auto; }
+    .drop { height: 40px; width: 1.5px; animation-duration: 1.2s !important; }
+}
+
+@media (max-width: 480px) {
+    .drop { height: 30px; width: 1px; animation-duration: 1s !important; }
+}
+    </style>
 </head>
 <body>
     <div class="form-wrapper">
-        <a href="https://zu38.github.io/id" class="next-button">
-            <button type="button">Agent Link</button>
-        </a>
-         
-        <a href="https://zu38.github.io/pid" class="next-button1">
-            <button type="button">Player Link</button>
-        </a>
-        <div class="form-container" id="form-container">
+            <div class="form-container" id="form-container">
             <h1> Game Records</h1>
             <form action="https://script.google.com/macros/s/AKfycbzQvRXVtQqqrZ-1NpTkESHvTCPdSqRGh-6SnZfxgI3iqEq7UXKp3WjHQww4aHyh_H_4/exec" method="POST">
                 <label for="player_name">Player's Name:</label>
@@ -72,24 +217,25 @@ l<!DOCTYPE html>
                 </select>
 
                 <input type="submit" value="Submit">
-                
+                <div class="button-section">
+    <div class="rain" id="rain"></div>
+    <div class="button-container">
+        <a href="https://zu38.github.io/wr" class="nav-button">Invoice</a>
+    <a href="https://zu38.github.io/id" class="nav-button">Agent Link</a>
+    <a href="https://zu38.github.io/pid" class="nav-button">Player Link</a>
+    <a href="https://docs.google.com/spreadsheets/d/1VfPQH2XsHoujrLXsMaKpmEMWYrk1aYZKdK-Rt-JLyjM/edit?usp=sharing" class="nav-button">View Records</a>
+    <a href="https://github.com/zu38/777/blob/main/2%20(1).png?raw=true" class="nav-button">Game Rules</a>
+    <a href="https://github.com/zu38/777/blob/main/Games.png?raw=true" class="nav-button">Games We Have</a>
+    <a href="https://github.com/zu38/777/blob/main/4.png?raw=true" class="nav-button">Freeplay Rules</a>
+    </div>
+    <div class="learn-more" onclick="showPopup()">Learn More...</div>
+</div>
             </form>
-             <a href="https://zu38.github.io/wr" >
-            Invoice
-        </a>
-            <a href="https://docs.google.com/spreadsheets/d/1CUft2Em2PExD57mF67Zsvgur_-XtNARQYjysmAufFMY/edit?usp=sharing" >
-            View Records
-        </a>
-            <br>
-            <a href="https://github.com/zu38/777/blob/main/2%20(1).png?raw=true" >
-            Game Rules
-             </a>
-             <div class="learn-more" onclick="showPopup()">Learn More...</div>
+             
         </div>
         </div>
        
-    </div>
-    
+   
 
     <script>
         window.onload = function () {
@@ -136,6 +282,30 @@ l<!DOCTYPE html>
                 }
             });
         });
+
+        function createRain() {
+    const rainContainer = document.getElementById('rain');
+    const dropsCount = window.innerWidth > 768 ? 50 : window.innerWidth > 480 ? 30 : 20;
+    
+    // Clear existing drops
+    rainContainer.innerHTML = '';
+    
+    // Create new drops
+    for(let i = 0; i < dropsCount; i++) {
+        const drop = document.createElement('div');
+        drop.className = 'drop';
+        drop.style.left = Math.random() * 100 + '%';
+        drop.style.animationDelay = Math.random() * 2 + 's';
+        drop.style.animationDuration = (Math.random() * 0.5 + 1) + 's';
+        rainContainer.appendChild(drop);
+    }
+}
+
+// Initial creation
+createRain();
+
+// Update on resize
+window.addEventListener('resize', createRain);
     </script>
 </body>
 </html>
